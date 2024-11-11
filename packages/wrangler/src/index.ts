@@ -73,6 +73,7 @@ import {
 	kvNamespaceListCommand,
 	kvNamespaceNamespace,
 } from "./kv";
+import { connections } from "./connections";
 import { logBuildFailure, logger, LOGGER_LEVELS } from "./logger";
 import { getMetricsDispatcher } from "./metrics";
 import {
@@ -976,6 +977,15 @@ export function createCLIParser(argv: string[]) {
 	wrangler.command("pipelines", false, (pipelinesYargs) => {
 		return pipelines(pipelinesYargs.command(subHelp));
 	});
+
+	// connections
+	wrangler.command(
+		"connections",
+		`🔌 Manage cross-account connections ${chalk.hex(betaCmdColor)("[unstable preview]")}`,
+		(connectionsYargs) => {
+			return connections(connectionsYargs.command(subHelp));
+		}
+	);
 
 	/******************** CMD GROUP ***********************/
 
