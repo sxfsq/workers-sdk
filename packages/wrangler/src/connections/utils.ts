@@ -1,3 +1,5 @@
+import { Config } from "../config";
+import { UserError } from "../errors";
 import { ConnectionBinding } from "./client";
 
 export function validateMetadata(
@@ -9,7 +11,7 @@ export function validateMetadata(
 	try {
 		json = JSON.parse(metadata);
 	} catch (e) {
-		throw new Error("Metadata property was not valid JSON");
+		throw new UserError("Metadata property was not valid JSON");
 	}
 
 	// TODO: validate schema?
@@ -17,24 +19,57 @@ export function validateMetadata(
 }
 
 export function validateResources(
-	resources: (string | number)[] | undefined
+	resources: (string | number)[] | undefined,
+	config: Config
 ): ConnectionBinding[] {
 	if (!resources) return [];
 
 	return resources.map((resource) => {
-		let json: ConnectionBinding;
-		try {
-			json = JSON.parse(String(resource));
-		} catch (e) {
-			throw new Error("Resources property was not valid JSON");
-		}
+		const [name, target_script = config.name, entrypoint = "default", ...args] =
+			String(resource).split(":");
 
-		if (!json.name) {
-			throw new Error("Resource name is required");
+		if (!name) {
+			throw new UserError("Resource name is required");
 		}
-		if (!json.target_script) {
-			throw new Error("Resource target_script is required");
+		if (!target_script) {
+			throw new UserError(
+				"Resource target_script is required as none was inferred from config"
+			);
 		}
-		return json;
+		return {
+			name,
+			target_script,
+			entrypoint,
+			args: args.length ? JSON.parse(args.join(":")) : {},
+		};
+	});
+}
+
+export function validateHooks(
+	hooks: (string | number)[] | undefined,
+	config: Config
+): ConnectionBinding[] {
+	if (!hooks) return [];
+
+	return hooks.map((hook) => {
+		const [name, target_script = config.name, entrypoint = "default", ...args] =
+			String(hook)
+				.split(":")
+				.map((s) => (s === "" ? undefined : s));
+
+		if (!name) {
+			throw new UserError("Hook name is required");
+		}
+		if (!target_script) {
+			throw new UserError(
+				"Hook target_script is required as none was inferred from config"
+			);
+		}
+		return {
+			name,
+			target_script,
+			entrypoint,
+			args: args.length ? JSON.parse(args.join(":")) : {},
+		};
 	});
 }
