@@ -120,7 +120,7 @@ export const ASSETS_PLUGIN: Plugin<typeof AssetsOptionsSchema> = {
 		};
 
 		const routerService: Service = {
-			name: ROUTER_SERVICE_NAME,
+			name: `${ROUTER_SERVICE_NAME}-${options.assets.workerName}`,
 			worker: {
 				compatibilityDate: "2024-08-01",
 				modules: [
