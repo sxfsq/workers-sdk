@@ -370,7 +370,7 @@ function buildProjectWorkerOptions(
 		runnerWorker.compatibilityFlags
 	);
 
-	if (mode !== "v1") {
+	if (mode !== "v1" && mode !== "v2") {
 		runnerWorker.compatibilityFlags.push("nodejs_compat");
 	}
 
