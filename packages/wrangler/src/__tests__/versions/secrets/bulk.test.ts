@@ -22,7 +22,7 @@ describe("versions secret bulk", () => {
 		vi.spyOn(readline, "createInterface").mockImplementation(
 			() => null as unknown as Interface
 		);
-		await runWrangler(`versions secret bulk --name script-name --x-versions`);
+		await runWrangler(`versions secret bulk --name script-name`);
 		expect(std.out).toMatchInlineSnapshot(
 			`"🌀 Creating the secrets for the Worker \\"script-name\\" "`
 		);
@@ -59,9 +59,7 @@ describe("versions secret bulk", () => {
 			expect(metadata.keep_assets).toBeTruthy();
 		});
 
-		await runWrangler(
-			`versions secret bulk secrets.json --name script-name --x-versions`
-		);
+		await runWrangler(`versions secret bulk secrets.json --name script-name`);
 		expect(std.out).toMatchInlineSnapshot(
 			`
 			"🌀 Creating the secrets for the Worker \\"script-name\\"
@@ -112,7 +110,7 @@ describe("versions secret bulk", () => {
 			expect(metadata.keep_assets).toBeTruthy();
 		});
 
-		await runWrangler(`versions secret bulk --name script-name --x-versions`);
+		await runWrangler(`versions secret bulk --name script-name`);
 		expect(std.out).toMatchInlineSnapshot(
 			`
 			"🌀 Creating the secrets for the Worker \\"script-name\\"
@@ -129,9 +127,7 @@ describe("versions secret bulk", () => {
 	test("should error on invalid json file", async () => {
 		await writeFile("secrets.json", "not valid json :(", { encoding: "utf8" });
 
-		await runWrangler(
-			`versions secret bulk secrets.json --name script-name --x-versions`
-		);
+		await runWrangler(`versions secret bulk secrets.json --name script-name`);
 		expect(std.out).toMatchInlineSnapshot(
 			`"🌀 Creating the secrets for the Worker \\"script-name\\" "`
 		);
@@ -163,7 +159,7 @@ describe("versions secret bulk", () => {
 			expect(metadata.keep_assets).toBeTruthy();
 		});
 
-		await runWrangler(`versions secret bulk --name script-name --x-versions`);
+		await runWrangler(`versions secret bulk --name script-name`);
 		expect(std.out).toMatchInlineSnapshot(
 			`"🌀 Creating the secrets for the Worker \\"script-name\\" "`
 		);

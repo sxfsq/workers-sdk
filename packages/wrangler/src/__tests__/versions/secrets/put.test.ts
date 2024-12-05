@@ -43,9 +43,7 @@ describe("versions secret put", () => {
 			]);
 			expect(metadata.keep_assets).toBeTruthy();
 		});
-		await runWrangler(
-			"versions secret put NEW_SECRET --name script-name --x-versions"
-		);
+		await runWrangler("versions secret put NEW_SECRET --name script-name");
 
 		expect(std.out).toMatchInlineSnapshot(`
 			"🌀 Creating the secret for the Worker \\"script-name\\"
@@ -67,10 +65,7 @@ describe("versions secret put", () => {
 
 		mockSetupApiCalls();
 		mockPostVersion();
-		await runWrangler(
-			"versions secret put NEW_SECRET --name script-name --x-versions"
-		);
-
+		await runWrangler("versions secret put NEW_SECRET --name script-name");
 		expect(std.warn).toMatchInlineSnapshot(`""`);
 		expect(std.err).toMatchInlineSnapshot(`""`);
 	});
@@ -131,7 +126,7 @@ describe("versions secret put", () => {
 			]);
 			expect(metadata.keep_assets).toBeTruthy();
 		});
-		await runWrangler("versions secret put NEW_SECRET --x-versions");
+		await runWrangler("versions secret put NEW_SECRET");
 
 		expect(std.out).toMatchInlineSnapshot(`
 			"🌀 Creating the secret for the Worker \\"script-name\\"
@@ -167,7 +162,7 @@ describe("versions secret put", () => {
 			).toBe("Deploy a new secret");
 		});
 		await runWrangler(
-			"versions secret put NEW_SECRET --name script-name --message 'Deploy a new secret' --x-versions"
+			"versions secret put NEW_SECRET --name script-name --message 'Deploy a new secret'"
 		);
 
 		expect(std.out).toMatchInlineSnapshot(`
@@ -207,7 +202,7 @@ describe("versions secret put", () => {
 			).toBe("v1");
 		});
 		await runWrangler(
-			"versions secret put NEW_SECRET --name script-name --message 'Deploy a new secret' --tag v1 --x-versions"
+			"versions secret put NEW_SECRET --name script-name --message 'Deploy a new secret' --tag v1"
 		);
 
 		expect(std.out).toMatchInlineSnapshot(`
@@ -244,7 +239,7 @@ describe("versions secret put", () => {
 			).toBe("Deploy a new secret");
 		});
 		await runWrangler(
-			"versions secret put SECRET --name script-name --message 'Deploy a new secret' --x-versions"
+			"versions secret put SECRET --name script-name --message 'Deploy a new secret'"
 		);
 
 		expect(std.out).toMatchInlineSnapshot(`
@@ -320,7 +315,7 @@ describe("versions secret put", () => {
 			).toBe("Deploy a new secret");
 		});
 		await runWrangler(
-			"versions secret put SECRET --name script-name --message 'Deploy a new secret' --x-versions"
+			"versions secret put SECRET --name script-name --message 'Deploy a new secret'"
 		);
 
 		expect(std.out).toMatchInlineSnapshot(`

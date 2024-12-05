@@ -316,13 +316,6 @@ export function createCLIParser(argv: string[]) {
 			}
 			return true;
 		})
-		.option("experimental-versions", {
-			describe: `Experimental: support Worker Versions`,
-			type: "boolean",
-			default: true,
-			hidden: true,
-			alias: ["x-versions", "experimental-gradual-rollouts"],
-		})
 		.check((args) => {
 			// Grab locally specified env params from `.env` file
 			const loaded = loadDotEnv(".env", args.env);
