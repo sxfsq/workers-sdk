@@ -91,9 +91,7 @@ describe("versions secret put", () => {
 				`secret
 			` // whitespace & newline being removed
 			);
-			await runWrangler(
-				"versions secret put NEW_SECRET --name script-name --x-versions"
-			);
+			await runWrangler("versions secret put NEW_SECRET --name script-name");
 
 			expect(std.out).toMatchInlineSnapshot(`
 				"🌀 Creating the secret for the Worker \\"script-name\\"

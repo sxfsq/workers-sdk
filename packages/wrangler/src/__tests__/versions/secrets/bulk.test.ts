@@ -78,9 +78,7 @@ describe("versions secret bulk", () => {
 		await writeFile("wrangler.json", JSON.stringify({ invalid_field: true }));
 		mockSetupApiCalls();
 		mockPostVersion();
-		await runWrangler(
-			`versions secret bulk secrets.json --name script-name --x-versions`
-		);
+		await runWrangler(`versions secret bulk secrets.json --name script-name`);
 		expect(std.warn).toMatchInlineSnapshot(`""`);
 		expect(std.err).toMatchInlineSnapshot(`""`);
 	});

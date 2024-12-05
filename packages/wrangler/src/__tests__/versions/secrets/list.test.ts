@@ -262,7 +262,7 @@ describe("versions secret list", () => {
 		mockGetDeployments();
 		mockGetVersion("version-id-1");
 
-		await runWrangler("versions secret list --name script-name --x-versions");
+		await runWrangler("versions secret list --name script-name");
 
 		expect(std.warn).toMatchInlineSnapshot(`""`);
 		expect(std.err).toMatchInlineSnapshot(`""`);
