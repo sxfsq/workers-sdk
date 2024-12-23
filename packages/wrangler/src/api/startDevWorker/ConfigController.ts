@@ -430,7 +430,7 @@ export class ConfigController extends Controller<ConfigControllerEventMap> {
 								? "https"
 								: "http",
 				},
-				{ useRedirect: true }
+				{ useRedirectIfAvailable: true }
 			);
 
 			if (typeof vitest === "undefined") {
