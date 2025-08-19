@@ -1,0 +1,64 @@
+如何在 Wrangler.toml文件设置 绑定 KV 命名空间,并通过 Wrangler.toml配置KV多个变量名和对应值
+
+
+
+在 Wrangler.toml 文件中，你可以设置绑定 KV 命名空间，并通过配置多个变量名和对应的值来管理 KV 存储。以下是如何进行设置的步骤：
+
+### 1. **绑定 KV 命名空间**
+在 `Wrangler.toml` 文件中，你需要在 `kv_namespaces` 部分定义你的 KV 命名空间。你可以指定多个 KV 命名空间。
+
+```toml
+kv_namespaces = [
+    { binding = "KV_NAMESPACE_1", id = "your-kv-namespace-id-1" },
+    { binding = "KV_NAMESPACE_2", id = "your-kv-namespace-id-2" }
+]
+```
+
+- `binding` 是你在 Workers 脚本中引用这个 KV 命名空间的名称。
+- `id` 是你在 Cloudflare Dashboard 上获得的 KV 命名空间的 ID。
+
+### 2. **配置 KV 变量和对应的值**
+你可以通过 `wrangler secret` 命令行工具来管理 KV 命名空间中的键值对。但是，如果你想在 `Wrangler.toml` 文件中指定初始的变量和值，可以通过如下方式指定：
+
+```toml
+[vars]
+KV_VAR_1 = "value1"
+KV_VAR_2 = "value2"
+```
+
+- `[vars]` 部分可以定义全局变量，或者在绑定的 KV 命名空间中定义特定的键值对。
+
+### 3. **完整示例**
+下面是一个完整的 `Wrangler.toml` 文件示例：
+
+```toml
+name = "your-worker-name"
+type = "javascript"
+account_id = "your-cloudflare-account-id"
+workers_dev = true
+
+kv_namespaces = [
+    { binding = "KV_NAMESPACE_1", id = "your-kv-namespace-id-1" }
+]
+
+[vars]
+KV_VAR_1 = "value1"
+KV_VAR_2 = "value2"
+```
+
+### 4. **通过脚本访问 KV**
+在你的 Workers 脚本中，你可以通过 `KV_NAMESPACE_1.get("KV_VAR_1")` 来访问这些变量。
+
+```javascript
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const value1 = await KV_NAMESPACE_1.get("KV_VAR_1")
+  return new Response(`Value is: ${value1}`)
+}
+```
+
+### 文件检查
+如果你想我检查一下你上传的 `Wrangler.toml` 文件是否正确配置或需要改进的地方，可以告诉我。

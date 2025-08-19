@@ -1,0 +1,79 @@
+vscode下载：https://code.visualstudio.com/download
+nodejs下载：https://nodejs.org/en/download/
+代码：https://github.com/shiteThings/extractNodes
+
+查看nodejs版本： node -v
+
+dir 命令展示当前目录下的文件和目录
+
+cd 目录名称进入到某个目录中 比如，运行dir命令的结果，显示当前目录下有一名字叫go的文件夹，你可以使用 cd go 进入go文件夹
+
+项目地址：
+https://github.com/shiteThings/extractNodes
+安装cloudflare c3工具并创建项目:
+npm create cloudflare@latest
+安装wrangler工具
+npm install -g wrangler
+测试程序
+npx wrangler dev
+安装js-yaml的依赖
+npm install js-yaml
+再测试新代码程序
+npx wrangler dev
+部署程序到cloudflare worker（此步骤慎用）
+npx wrangler deploy
+
+
+创建项目
+npm create cloudflare@latest
+安装依赖js-yaml
+npm install js-yaml
+测试
+wrangler dev
+部署到cloudflare（此步骤慎用）
+wrangler deploy
+
+退出测试可按键盘上“Q”键
+
+
+
+Cloudflare Workers SDK(Cloudflare Workers 让您可以在全球范围内即时部署无服务器代码，以实现卓越的性能、可靠性和规模)。
+
+安装 Wrangler
+要安装 Wrangler，请确保您已安装 Node.js 和 npm，最好使用 Volta 或 nvm 等 Node 版本管理器。使用版本管理器有助于避免权限问题，并允许您更改Node.js版本。Wrangler 需要 Node 版本或更高版本。16.17.0
+Wrangler 安装在本地每个项目中。这允许您和您的团队使用相同的 Wrangler 版本，控制每个项目的 Wrangler 版本，并在需要时回滚到早期版本的 Wrangler。
+要在 Worker 项目中安装 Wrangler，请运行：
+npm install wrangler --save-dev
+
+由于 Cloudflare 建议在您的项目中本地（而不是全局）安装 Wrangler，因此运行 Wrangler 的方式将取决于您的具体设置和包管理器。有关更多信息，请参阅如何运行 Wrangler 命令。
+
+谨慎
+如果未安装 Wrangler，则运行将使用最新版本的 Wrangler。
+npx wrangler
+
+检查您的 Wrangler 版本
+要检查您的 Wrangler 版本，请运行：
+npx wrangler --version
+// or
+npx wrangler version
+// or
+npx wrangler -v
+
+更新 Wrangler
+要更新项目中使用的 Wrangler 版本，请运行：
+npm install wrangler@latest
+
+项目地址：https://github.com/cloudflare/workers-sdk/tree/wrangler%403.72.2
+“wrangler.toml”文件可从该路径workers-sdk-wrangler-3.72.2\templates\worker-typescript的文件夹worker-typescript中复制出来
+
+
+注：要运行不同内容的index.js文件，可重命名不同内容的index.js文件名如index1.js、index - extractNodes.js等，将这些js文件放入“src”文件夹中，修改本文件夹“chromego”中的“wrangler.toml”文件内容的第三行“main = "src/index.js"”内容，如改为"main = "src/index1.js""、"main = "src/index - extractNodes.js""等；然后在"src"文件夹里（即文件所在文件夹，也可不必进入此文件夹）运行cmd命令“wrangler dev”。
+
+
+需要设置kv时，可修改“wrangler.toml”中的以下部分
+# Bind a KV Namespace. Use KV as persistent storage for small key-value pairs.
+# Docs: https://developers.cloudflare.com/workers/wrangler/configuration/#kv-namespaces
+ [[kv_namespaces]]
+ binding = "settings"
+ id = "12345678"
+其中binding = "settings"等号后面的值"settings"由.js文件中// src/panel.ts这段后面的  await env.settings.get中的settings确定； id = "12345678"等号后面的值 "12345678"为随意填写。
